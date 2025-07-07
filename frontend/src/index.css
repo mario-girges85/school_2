@@ -1,0 +1,299 @@
+@import "tailwindcss";
+
+/* Custom Color Palette - Based on Saint Demiana Deacos School branding */
+:root {
+  /* Primary Colors - Based on your main color #a71f23 */
+  --primary-50: #fef2f2;
+  --primary-100: #fee2e2;
+  --primary-200: #fecaca;
+  --primary-300: #fca5a5;
+  --primary-400: #f87171;
+  --primary-500: #a71f23; /* Your main brand color */
+  --primary-600: #991b1b;
+  --primary-700: #7f1d1d;
+  --primary-800: #6b1d1d;
+  --primary-900: #5a1d1d;
+
+  /* Neutral Colors - Warm grays that complement the red */
+  --neutral-50: #fafafa;
+  --neutral-100: #f5f5f5;
+  --neutral-200: #e5e5e5;
+  --neutral-300: #d4d4d4;
+  --neutral-400: #a3a3a3;
+  --neutral-500: #737373;
+  --neutral-600: #525252;
+  --neutral-700: #404040;
+  --neutral-800: #262626;
+  --neutral-900: #171717;
+
+  /* Accent Colors - Blue to complement the red */
+  --accent-50: #eff6ff;
+  --accent-100: #dbeafe;
+  --accent-200: #bfdbfe;
+  --accent-300: #93c5fd;
+  --accent-400: #60a5fa;
+  --accent-500: #3b82f6;
+  --accent-600: #2563eb;
+  --accent-700: #1d4ed8;
+  --accent-800: #1e40af;
+  --accent-900: #1e3a8a;
+}
+
+/* Custom utility classes using the color palette */
+.bg-primary-50 {
+  background-color: var(--primary-50);
+}
+.bg-primary-100 {
+  background-color: var(--primary-100);
+}
+.bg-primary-200 {
+  background-color: var(--primary-200);
+}
+.bg-primary-300 {
+  background-color: var(--primary-300);
+}
+.bg-primary-400 {
+  background-color: var(--primary-400);
+}
+.bg-primary-500 {
+  background-color: var(--primary-500);
+}
+.bg-primary-600 {
+  background-color: var(--primary-600);
+}
+.bg-primary-700 {
+  background-color: var(--primary-700);
+}
+.bg-primary-800 {
+  background-color: var(--primary-800);
+}
+.bg-primary-900 {
+  background-color: var(--primary-900);
+}
+
+.text-primary-50 {
+  color: var(--primary-50);
+}
+.text-primary-100 {
+  color: var(--primary-100);
+}
+.text-primary-200 {
+  color: var(--primary-200);
+}
+.text-primary-300 {
+  color: var(--primary-300);
+}
+.text-primary-400 {
+  color: var(--primary-400);
+}
+.text-primary-500 {
+  color: var(--primary-500);
+}
+.text-primary-600 {
+  color: var(--primary-600);
+}
+.text-primary-700 {
+  color: var(--primary-700);
+}
+.text-primary-800 {
+  color: var(--primary-800);
+}
+.text-primary-900 {
+  color: var(--primary-900);
+}
+
+.border-primary-50 {
+  border-color: var(--primary-50);
+}
+.border-primary-100 {
+  border-color: var(--primary-100);
+}
+.border-primary-200 {
+  border-color: var(--primary-200);
+}
+.border-primary-300 {
+  border-color: var(--primary-300);
+}
+.border-primary-400 {
+  border-color: var(--primary-400);
+}
+.border-primary-500 {
+  border-color: var(--primary-500);
+}
+.border-primary-600 {
+  border-color: var(--primary-600);
+}
+.border-primary-700 {
+  border-color: var(--primary-700);
+}
+.border-primary-800 {
+  border-color: var(--primary-800);
+}
+.border-primary-900 {
+  border-color: var(--primary-900);
+}
+
+/* Hover states */
+.hover\:bg-primary-600:hover {
+  background-color: var(--primary-600);
+}
+.hover\:bg-primary-700:hover {
+  background-color: var(--primary-700);
+}
+.hover\:text-primary-600:hover {
+  color: var(--primary-600);
+}
+.hover\:text-primary-700:hover {
+  color: var(--primary-700);
+}
+
+/* Focus states */
+.focus\:ring-primary-500:focus {
+  --tw-ring-color: var(--primary-500);
+}
+.focus\:border-primary-500:focus {
+  border-color: var(--primary-500);
+}
+
+/* Accent color utility classes */
+.bg-accent-50 {
+  background-color: var(--accent-50);
+}
+.bg-accent-100 {
+  background-color: var(--accent-100);
+}
+.bg-accent-200 {
+  background-color: var(--accent-200);
+}
+.bg-accent-300 {
+  background-color: var(--accent-300);
+}
+.bg-accent-400 {
+  background-color: var(--accent-400);
+}
+.bg-accent-500 {
+  background-color: var(--accent-500);
+}
+.bg-accent-600 {
+  background-color: var(--accent-600);
+}
+.bg-accent-700 {
+  background-color: var(--accent-700);
+}
+.bg-accent-800 {
+  background-color: var(--accent-800);
+}
+.bg-accent-900 {
+  background-color: var(--accent-900);
+}
+
+.text-accent-50 {
+  color: var(--accent-50);
+}
+.text-accent-100 {
+  color: var(--accent-100);
+}
+.text-accent-200 {
+  color: var(--accent-200);
+}
+.text-accent-300 {
+  color: var(--accent-300);
+}
+.text-accent-400 {
+  color: var(--accent-400);
+}
+.text-accent-500 {
+  color: var(--accent-500);
+}
+.text-accent-600 {
+  color: var(--accent-600);
+}
+.text-accent-700 {
+  color: var(--accent-700);
+}
+.text-accent-800 {
+  color: var(--accent-800);
+}
+.text-accent-900 {
+  color: var(--accent-900);
+}
+
+.border-accent-50 {
+  border-color: var(--accent-50);
+}
+.border-accent-100 {
+  border-color: var(--accent-100);
+}
+.border-accent-200 {
+  border-color: var(--accent-200);
+}
+.border-accent-300 {
+  border-color: var(--accent-300);
+}
+.border-accent-400 {
+  border-color: var(--accent-400);
+}
+.border-accent-500 {
+  border-color: var(--accent-500);
+}
+.border-accent-600 {
+  border-color: var(--accent-600);
+}
+.border-accent-700 {
+  border-color: var(--accent-700);
+}
+.border-accent-800 {
+  border-color: var(--accent-800);
+}
+.border-accent-900 {
+  border-color: var(--accent-900);
+}
+
+/* Accent hover states */
+.hover\:bg-accent-600:hover {
+  background-color: var(--accent-600);
+}
+.hover\:bg-accent-700:hover {
+  background-color: var(--accent-700);
+}
+.hover\:text-accent-600:hover {
+  color: var(--accent-600);
+}
+.hover\:text-accent-700:hover {
+  color: var(--accent-700);
+}
+
+/* Global styles */
+body {
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+    "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Smooth transitions */
+* {
+  transition-property: color, background-color, border-color,
+    text-decoration-color, fill, stroke;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--neutral-100);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--neutral-300);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--neutral-400);
+}
