@@ -11,18 +11,25 @@ const Signup = () => {
     gender: "male",
     phone: "",
     birthDate: "",
-    image: "",
+    image: null,
   });
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [errors, setErrors] = useState({});
 
   const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+    const { name, value, type, files } = e.target;
+    if (type === "file") {
+      setFormData((prev) => ({
+        ...prev,
+        [name]: files[0] || null,
+      }));
+    } else {
+      setFormData((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
+    }
     // Clear error when user starts typing
     if (errors[name]) {
       setErrors((prev) => ({
@@ -93,23 +100,21 @@ const Signup = () => {
 
     try {
       // Prepare the data for API
-      const signupData = {
-        name: formData.name.trim(),
-        email: formData.email.toLowerCase().trim(),
-        password: formData.password,
-        gender: formData.gender,
-        phone: formData.phone.trim(),
-        birthDate: new Date(formData.birthDate).toISOString(),
-        image: formData.image || "", // Optional field
-      };
+      const signupData = new FormData();
+      signupData.append("name", formData.name.trim());
+      signupData.append("email", formData.email.toLowerCase().trim());
+      signupData.append("password", formData.password);
+      signupData.append("gender", formData.gender);
+      signupData.append("phone", formData.phone.trim());
+      signupData.append("birthDate", new Date(formData.birthDate).toISOString());
+      if (formData.image) {
+        signupData.append("image", formData.image);
+      }
 
       // API call - replace with your actual API endpoint
       const response = await fetch("/api/auth/signup", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(signupData),
+        body: signupData,
       });
 
       if (response.ok) {
@@ -348,22 +353,21 @@ const Signup = () => {
               )}
             </div>
 
-            {/* Image URL Field */}
+            {/* Image File Field */}
             <div>
               <label
                 htmlFor="image"
                 className="block text-sm font-medium text-neutral-700 mb-2"
               >
-                Profile Image URL (Optional)
+                Profile Image (Optional)
               </label>
               <input
                 id="image"
                 name="image"
-                type="url"
-                value={formData.image}
+                type="file"
+                accept="image/*"
                 onChange={handleInputChange}
-                className="w-full px-4 py-3 border border-neutral-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors duration-200"
-                placeholder="Enter image URL (optional)"
+                className="w-full px-4 py-2 border border-neutral-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors duration-200"
               />
             </div>
 
