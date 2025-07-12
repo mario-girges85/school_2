@@ -66,6 +66,62 @@ const mockCorrections = {
   },
 };
 
+// --- Sub-components ---
+
+const CorrectionSummary = ({ student, subject, score, details }) => (
+  <div className="mb-6">
+    <div className="text-lg font-semibold mb-1">Student: {student}</div>
+    <div className="text-neutral-700 mb-1">Subject: {subject}</div>
+    <div className="text-neutral-700 mb-1">
+      Score: <span className="font-bold">{score}</span>
+    </div>
+    <div className="text-neutral-500 mb-4">{details}</div>
+  </div>
+);
+
+const QuestionCorrection = ({ question, index }) => {
+  const { text, answers, correct, chosen } = question;
+  return (
+    <div className="mb-4">
+      <div className="font-semibold mb-2">
+        Q{index + 1}: {text}
+      </div>
+      <ul className="space-y-2">
+        {answers.map((ans, i) => {
+          let style = "px-4 py-2 rounded border";
+          if (i === correct && i === chosen) {
+            style +=
+              " bg-green-100 border-green-500 text-green-800 font-semibold";
+          } else if (i === correct) {
+            style +=
+              " bg-green-100 border-green-500 text-green-800 font-semibold";
+          } else if (i === chosen && chosen !== correct) {
+            style += " bg-red-100 border-red-500 text-red-800 font-semibold";
+          } else {
+            style += " border-neutral-200";
+          }
+          return (
+            <li key={i} className={style}>
+              {ans}
+              {i === correct && (
+                <span className="ml-2 text-green-600">(Correct)</span>
+              )}
+              {i === chosen && i !== correct && (
+                <span className="ml-2 text-red-600">(Your answer)</span>
+              )}
+              {i === chosen && i === correct && (
+                <span className="ml-2 text-green-600">(Your answer)</span>
+              )}
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+  );
+};
+
+// --- Main ExamCorrection Component ---
+
 const ExamCorrection = () => {
   const { subject } = useParams();
   const navigate = useNavigate();
@@ -91,58 +147,15 @@ const ExamCorrection = () => {
   return (
     <Page title={`Correction: ${correction.subject}`}>
       <Container maxWidth="md">
-        <div className="mb-6">
-          <div className="text-lg font-semibold mb-1">
-            Student: {correction.student}
-          </div>
-          <div className="text-neutral-700 mb-1">
-            Subject: {correction.subject}
-          </div>
-          <div className="text-neutral-700 mb-1">
-            Score: <span className="font-bold">{correction.score}</span>
-          </div>
-          <div className="text-neutral-500 mb-4">{correction.details}</div>
-        </div>
+        <CorrectionSummary
+          student={correction.student}
+          subject={correction.subject}
+          score={correction.score}
+          details={correction.details}
+        />
         <div className="space-y-8">
           {correction.questions.map((q, idx) => (
-            <div key={idx} className="mb-4">
-              <div className="font-semibold mb-2">
-                Q{idx + 1}: {q.text}
-              </div>
-              <ul className="space-y-2">
-                {q.answers.map((ans, i) => {
-                  let style = "px-4 py-2 rounded border";
-                  if (i === q.correct && i === q.chosen) {
-                    style +=
-                      " bg-green-100 border-green-500 text-green-800 font-semibold";
-                  } else if (i === q.correct) {
-                    style +=
-                      " bg-green-100 border-green-500 text-green-800 font-semibold";
-                  } else if (i === q.chosen && q.chosen !== q.correct) {
-                    style +=
-                      " bg-red-100 border-red-500 text-red-800 font-semibold";
-                  } else {
-                    style += " border-neutral-200";
-                  }
-                  return (
-                    <li key={i} className={style}>
-                      {ans}
-                      {i === q.correct && (
-                        <span className="ml-2 text-green-600">(Correct)</span>
-                      )}
-                      {i === q.chosen && i !== q.correct && (
-                        <span className="ml-2 text-red-600">(Your answer)</span>
-                      )}
-                      {i === q.chosen && i === q.correct && (
-                        <span className="ml-2 text-green-600">
-                          (Your answer)
-                        </span>
-                      )}
-                    </li>
-                  );
-                })}
-              </ul>
-            </div>
+            <QuestionCorrection key={idx} question={q} index={idx} />
           ))}
         </div>
         <div className="flex justify-end mt-8">

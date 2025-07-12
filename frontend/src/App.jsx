@@ -18,6 +18,7 @@ import ClassDetails from "./pages/ClassDetails";
 import Profile from "./pages/Profile";
 import Attendance from "./pages/Attendance";
 import ExamCorrection from "./pages/ExamCorrection";
+import NotFound from "./pages/NotFound";
 
 // Home component
 const Home = () => {
@@ -85,6 +86,7 @@ function App() {
               path="/exams/:subject/correction"
               element={<ExamCorrection />}
             />
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </div>
       </Router>

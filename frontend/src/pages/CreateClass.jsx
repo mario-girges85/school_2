@@ -17,6 +17,57 @@ const teacherOptions = mockTeachers.map((t) => ({
   label: t.name,
 }));
 
+// --- Sub-component ---
+
+const CreateClassForm = ({
+  form,
+  handleChange,
+  handleSubmit,
+  submitting,
+  onCancel,
+}) => (
+  <form
+    onSubmit={handleSubmit}
+    className="bg-white rounded-lg shadow-lg p-8 border border-neutral-200 space-y-6"
+  >
+    <Input
+      label="Class Name"
+      name="name"
+      value={form.name}
+      onChange={handleChange}
+      required
+      placeholder="e.g. Grade 4"
+    />
+    <Input
+      label="Description"
+      name="description"
+      value={form.description}
+      onChange={handleChange}
+      required
+      placeholder="Short description"
+    />
+    <Select
+      label="Teacher"
+      name="teacher"
+      value={form.teacher}
+      onChange={handleChange}
+      options={teacherOptions}
+      required
+      placeholder="Select a teacher"
+    />
+    <div className="flex justify-between items-center mt-8">
+      <Button type="button" variant="ghost" onClick={onCancel}>
+        Back
+      </Button>
+      <Button type="submit" variant="primary" loading={submitting}>
+        Create Class
+      </Button>
+    </div>
+  </form>
+);
+
+// --- Main CreateClass Component ---
+
 const CreateClass = () => {
   const navigate = useNavigate();
   const [form, setForm] = useState({
@@ -34,57 +85,27 @@ const CreateClass = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setSubmitting(true);
+    // Simulate API call
     setTimeout(() => {
       setSubmitting(false);
       navigate("/classes");
     }, 1000);
   };
 
+  const handleCancel = () => {
+    navigate("/classes");
+  };
+
   return (
     <Page title="Create New Class">
       <Container maxWidth="md">
-        <form
-          onSubmit={handleSubmit}
-          className="bg-white rounded-lg shadow-lg p-8 border border-neutral-200 space-y-6"
-        >
-          <Input
-            label="Class Name"
-            name="name"
-            value={form.name}
-            onChange={handleChange}
-            required
-            placeholder="e.g. Grade 4"
-          />
-          <Input
-            label="Description"
-            name="description"
-            value={form.description}
-            onChange={handleChange}
-            required
-            placeholder="Short description"
-          />
-          <Select
-            label="Teacher"
-            name="teacher"
-            value={form.teacher}
-            onChange={handleChange}
-            options={teacherOptions}
-            required
-            placeholder="Select a teacher"
-          />
-          <div className="flex justify-between items-center mt-8">
-            <Button
-              type="button"
-              variant="ghost"
-              onClick={() => navigate("/classes")}
-            >
-              Back
-            </Button>
-            <Button type="submit" variant="primary" loading={submitting}>
-              Create Class
-            </Button>
-          </div>
-        </form>
+        <CreateClassForm
+          form={form}
+          handleChange={handleChange}
+          handleSubmit={handleSubmit}
+          submitting={submitting}
+          onCancel={handleCancel}
+        />
       </Container>
     </Page>
   );
