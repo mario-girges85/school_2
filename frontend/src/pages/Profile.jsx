@@ -1,315 +1,224 @@
 import React, { useState } from "react";
-import { useParams, useNavigate, Link } from "react-router-dom";
-import Page from "../components/layout/Page";
-import Container from "../components/layout/Container";
-import Button from "../components/ui/Button";
+import { useNavigate, Link } from "react-router-dom";
+import {
+  Card,
+  Badge,
+  Button,
+  Input,
+  Alert,
+  LoadingSpinner,
+} from "../components/ui";
+import ProfileEdit from "./ProfileEdit";
 
-// Mock users data (Ideally, fetch this from an API)
-const mockUsers = [
-  {
-    id: 1,
-    name: "Mariam Fady",
-    email: "mariam@email.com",
-    phone: "01012345678",
-    role: "student",
-    image:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSUpeorPvZN_kz2u_YMpnlcw5sdu2OfQKZ8NQ&s", // Placeholder for image URL
-    classes: ["Grade 1", "Grade 2"],
-    grades: [
-      { subject: "Math", value: 95 },
-      { subject: "Science", value: 88 },
-    ],
-    attendance: { present: 20, absent: 2 },
-  },
-  {
-    id: 2,
-    name: "Peter Samy",
-    email: "peter@email.com",
-    phone: "01087654321",
-    role: "teacher",
-    image:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSUpeorPvZN_kz2u_YMpnlcw5sdu2OfQKZ8NQ&s",
-    classes: ["Grade 1"],
-    grades: [],
-    attendance: { present: 22, absent: 0 },
-  },
-  {
-    id: 3,
-    name: "Sandra Nader",
-    email: "sandra@email.com",
-    phone: "01055555555",
-    role: "student",
-    image: "",
-  },
-  {
-    id: 4,
-    name: "Mark Adel",
-    email: "mark@email.com",
-    phone: "01022223333",
-    role: "student",
-    image: "",
-  },
-  {
-    id: 5,
-    name: "Nourhan George",
-    email: "nourhan@email.com",
-    phone: "01099998888",
-    role: "teacher",
-    image: "",
-  },
-];
+// Mock user data
+const mockUser = {
+  id: 1,
+  name: "Mariam Fady",
+  email: "mariam@email.com",
+  phone: "+201012345678",
+  gender: "female",
+  birthDate: "1990-07-15",
+  role: "student",
+  image:
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSUpeorPvZN_kz2u_YMpnlcw5sdu2OfQKZ8NQ&s",
+  classes: ["Grade 1", "Grade 2", "Mathematics", "Science"],
+  attendance: { present: 20, absent: 2 },
+  grades: [
+    { subject: "Math", value: 95 },
+    { subject: "Science", value: 88 },
+    { subject: "English", value: 92 },
+    { subject: "History", value: 85 },
+  ],
+};
 
-// --- Sub-components ---
-
-const ProfileNotFound = ({ navigate }) => (
-  <Page title="User Not Found">
-    <Container>
-      <div className="text-center py-12 text-neutral-500">User not found.</div>
-      <div className="flex justify-center mt-6">
-        <Button variant="secondary" onClick={() => navigate(-1)}>
-          Go Back
-        </Button>
-      </div>
-    </Container>
-  </Page>
-);
-
-const ProfileHeaderSection = ({ name, role, imagePreview }) => (
-  <div className="flex flex-col items-center py-8">
+// Profile Header Component
+const ProfileHeader = ({ user }) => (
+  <div className="flex flex-col items-center md:flex-row md:items-end gap-6 md:gap-8 pb-6 border-b border-neutral-200">
     <img
-      src={imagePreview || "/default-user.png"} // Fallback image
-      alt={name}
-      className="w-32 h-32 rounded-full object-cover border border-neutral-200 bg-neutral-100 mb-6 max-w-full h-auto"
+      src={user.image || "/default-user.png"}
+      alt={user.name}
+      className="w-28 h-28 rounded-full object-cover border border-neutral-200 bg-neutral-100 shadow-sm"
     />
-    <div className="text-lg font-semibold mb-2">{name}</div>
-    <div className="text-neutral-500 capitalize mb-4">Role: {role}</div>
-  </div>
-);
-
-const ProfileInfoDisplay = ({ profile, setEditMode }) => (
-  <>
-    <div className="text-neutral-600 mb-1">{profile.email}</div>
-    <div className="text-neutral-600 mb-1">{profile.phone}</div>
-    <Button
-      variant="secondary"
-      onClick={() => setEditMode(true)}
-      className="mb-4 mt-4"
-    >
-      Edit Profile
-    </Button>
-  </>
-);
-
-const ProfileEditForm = ({
-  profile,
-  handleInputChange,
-  handleImageChange,
-  handleSave,
-  handleCancel,
-}) => (
-  <>
-    <input
-      type="file"
-      accept="image/*"
-      onChange={handleImageChange}
-      className="mb-4"
-    />
-    <input
-      type="text"
-      name="name"
-      value={profile.name}
-      onChange={handleInputChange}
-      className="mb-2 border rounded px-3 py-2 w-full"
-      placeholder="Name"
-    />
-    <input
-      type="email"
-      name="email"
-      value={profile.email}
-      onChange={handleInputChange}
-      className="mb-2 border rounded px-3 py-2 w-full"
-      placeholder="Email"
-    />
-    <input
-      type="text"
-      name="phone"
-      value={profile.phone}
-      onChange={handleInputChange}
-      className="mb-4 border rounded px-3 py-2 w-full"
-      placeholder="Phone"
-    />
-    <div className="flex gap-3">
-      <Button variant="primary" onClick={handleSave}>
-        Save
-      </Button>
-      <Button variant="secondary" onClick={handleCancel}>
-        Cancel
-      </Button>
+    <div className="flex flex-col items-center md:items-start gap-2">
+      <h2 className="text-2xl font-bold text-neutral-900">{user.name}</h2>
+      <Badge variant="primary" size="md" className="capitalize">
+        {user.role}
+      </Badge>
     </div>
-  </>
-);
-
-const ProfileSection = ({ title, children }) => (
-  <div className="mt-8">
-    <h3 className="text-lg font-semibold mb-2">{title}</h3>
-    {children}
   </div>
 );
 
-const ClassAssignmentsList = ({ classes }) => (
-  <div className="overflow-x-auto">
-    <ul className="list-disc list-inside text-neutral-700">
-      {classes && classes.length > 0 ? (
-        classes.map((cls, idx) => <li key={idx}>{cls}</li>)
-      ) : (
-        <li>No class assignments.</li>
-      )}
-    </ul>
+// Profile Details Component
+const ProfileDetails = ({ user }) => (
+  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div>
+      <div className="text-sm text-neutral-500 mb-1">Email</div>
+      <div className="font-medium text-neutral-800 break-all">{user.email}</div>
+    </div>
+    <div>
+      <div className="text-sm text-neutral-500 mb-1">Phone</div>
+      <div className="font-medium text-neutral-800">{user.phone}</div>
+    </div>
+    <div>
+      <div className="text-sm text-neutral-500 mb-1">Gender</div>
+      <div className="font-medium text-neutral-800 capitalize">
+        {user.gender}
+      </div>
+    </div>
+    <div>
+      <div className="text-sm text-neutral-500 mb-1">Birth Date</div>
+      <div className="font-medium text-neutral-800">{user.birthDate}</div>
+    </div>
   </div>
 );
 
+// Classes List Component
+const ClassesList = ({ classes }) => (
+  <div>
+    <h4 className="text-sm font-medium text-neutral-700 mb-2">
+      Assigned Classes
+    </h4>
+    {classes && classes.length > 0 ? (
+      <ul className="list-disc list-inside space-y-1 text-neutral-800">
+        {classes.map((cls, index) => (
+          <li key={index} className="text-sm">
+            {cls}
+          </li>
+        ))}
+      </ul>
+    ) : (
+      <p className="text-sm text-neutral-500">No classes assigned</p>
+    )}
+  </div>
+);
+
+// Attendance Summary Component
 const AttendanceSummaryDisplay = ({ attendance }) => (
-  <div className="text-neutral-700">
-    Present:{" "}
-    <span className="text-green-600 font-bold">{attendance?.present ?? 0}</span>{" "}
-    days
-    <br />
-    Absent:{" "}
-    <span className="text-red-600 font-bold">
-      {attendance?.absent ?? 0}
-    </span>{" "}
-    days
+  <div>
+    <h4 className="text-sm font-medium text-neutral-700 mb-2">
+      Attendance Summary
+    </h4>
+    <div className="space-y-1 text-sm">
+      <div className="flex justify-between">
+        <span className="text-neutral-600">Present:</span>
+        <span className="font-medium text-green-600">
+          {attendance?.present || 0} days
+        </span>
+      </div>
+      <div className="flex justify-between">
+        <span className="text-neutral-600">Absent:</span>
+        <span className="font-medium text-red-600">
+          {attendance?.absent || 0} days
+        </span>
+      </div>
+      <div className="flex justify-between border-t border-neutral-200 pt-1">
+        <span className="text-neutral-700 font-medium">Total:</span>
+        <span className="font-medium text-neutral-800">
+          {(attendance?.present || 0) + (attendance?.absent || 0)} days
+        </span>
+      </div>
+    </div>
   </div>
 );
 
-const GradesTable = ({ grades }) => (
-  <div className="overflow-x-auto">
-    <table className="min-w-full text-sm border border-neutral-200">
-      <thead>
-        <tr className="bg-neutral-100">
-          <th className="px-3 py-2 text-left">Subject</th>
-          <th className="px-3 py-2 text-left">Grade</th>
-        </tr>
-      </thead>
-      <tbody>
-        {grades && grades.length > 0 ? (
-          grades.map((g, idx) => (
-            <tr key={idx}>
-              <td className="px-3 py-2">
-                <Link
-                  to={`/exams/${g.subject}/correction`}
-                  className="text-primary-600 hover:underline"
-                >
-                  {g.subject}
-                </Link>
-              </td>
-              <td className="px-3 py-2">{g.value}</td>
-            </tr>
-          ))
-        ) : (
-          <tr>
-            <td colSpan={2} className="text-neutral-500 px-3 py-2">
-              No grades available.
-            </td>
-          </tr>
-        )}
-      </tbody>
-    </table>
-  </div>
-);
+// Grades Table Component
+const GradesTable = ({ grades, role }) => {
+  if (role !== "student") return null;
 
+  return (
+    <div>
+      <h4 className="text-sm font-medium text-neutral-700 mb-3">Grades</h4>
+      {grades && grades.length > 0 ? (
+        <div className="overflow-x-auto">
+          <table className="min-w-full text-sm">
+            <thead>
+              <tr className="border-b border-neutral-200">
+                <th className="text-left py-2 font-medium text-neutral-700">
+                  Subject
+                </th>
+                <th className="text-right py-2 font-medium text-neutral-700">
+                  Grade
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {grades.map((grade, index) => (
+                <tr key={index} className="border-b border-neutral-100">
+                  <td className="py-2">
+                    <Link
+                      to={`/exams/${grade.subject}/correction`}
+                      className="text-primary-600 hover:text-primary-800 hover:underline"
+                    >
+                      {grade.subject}
+                    </Link>
+                  </td>
+                  <td className="text-right py-2 font-medium">
+                    {grade.value}%
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      ) : (
+        <p className="text-sm text-neutral-500">No grades available</p>
+      )}
+    </div>
+  );
+};
+
+// Back Button Component
 const BackButton = ({ navigate }) => (
-  <Button variant="secondary" onClick={() => navigate(-1)} className="mt-4">
-    Back
+  <Button variant="secondary" onClick={() => navigate(-1)} className="mb-4">
+    ← Back
   </Button>
 );
 
-// --- Main Profile Component ---
-
+// Main Profile Component
 const Profile = () => {
-  const { id } = useParams();
   const navigate = useNavigate();
-  const userId = parseInt(id, 10);
-  const userData = mockUsers.find((u) => u.id === userId);
-
-  const [editMode, setEditMode] = useState(false);
-  const [profile, setProfile] = useState(userData);
-  const [imagePreview, setImagePreview] = useState(
-    userData?.image || "/default-user.png"
-  );
-
-  if (!profile) {
-    return <ProfileNotFound navigate={navigate} />;
-  }
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setProfile((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImagePreview(reader.result);
-        setProfile((prev) => ({ ...prev, image: reader.result }));
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
-  const handleSave = () => {
-    setEditMode(false);
-    // In a real app, send 'profile' data to your backend API here
-    console.log("Saving profile:", profile);
-    // Example: await saveProfileToApi(profile);
-  };
-
-  const handleCancel = () => {
-    setProfile(userData); // Revert to original data
-    setImagePreview(userData?.image || "/default-user.png"); // Revert image
-    setEditMode(false);
-  };
+  const [user, setUser] = useState(mockUser);
 
   return (
-    <Page title={profile.name} subtitle={`Role: ${profile.role}`}>
-      <Container maxWidth="md">
-        <ProfileHeaderSection
-          name={profile.name}
-          role={profile.role}
-          imagePreview={imagePreview}
-        />
-
-        {editMode ? (
-          <ProfileEditForm
-            profile={profile}
-            handleInputChange={handleInputChange}
-            handleImageChange={handleImageChange}
-            handleSave={handleSave}
-            handleCancel={handleCancel}
-          />
-        ) : (
-          <ProfileInfoDisplay profile={profile} setEditMode={setEditMode} />
-        )}
-
+    <div className="min-h-screen bg-neutral-50 py-8 px-4">
+      <div className="max-w-4xl mx-auto">
         <BackButton navigate={navigate} />
 
-        <ProfileSection title="Class Assignments">
-          <ClassAssignmentsList classes={profile.classes} />
-        </ProfileSection>
+        <Card className="mb-6" padding="lg">
+          <ProfileHeader user={user} />
+        </Card>
 
-        <ProfileSection title="Attendance Summary">
-          <AttendanceSummaryDisplay attendance={profile.attendance} />
-        </ProfileSection>
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          {/* Left Column - Profile Details */}
+          <div className="lg:col-span-2 space-y-6">
+            <Card title="Profile Details" padding="lg">
+              <ProfileDetails user={user} />
+            </Card>
 
-        {profile.role === "student" && (
-          <ProfileSection title="Grades">
-            <GradesTable grades={profile.grades} />
-          </ProfileSection>
-        )}
-      </Container>
-    </Page>
+            <Card title="Edit Profile" padding="lg">
+              <ProfileEdit user={user} onSave={setUser} />
+            </Card>
+
+            {user.role === "student" && (
+              <Card title="Academic Information" padding="lg">
+                <GradesTable grades={user.grades} role={user.role} />
+              </Card>
+            )}
+          </div>
+
+          {/* Right Column - Additional Info */}
+          <div className="space-y-6">
+            <Card title="Classes" padding="lg">
+              <ClassesList classes={user.classes} />
+            </Card>
+
+            <Card title="Attendance" padding="lg">
+              <AttendanceSummaryDisplay attendance={user.attendance} />
+            </Card>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 };
 

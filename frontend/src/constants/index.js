@@ -52,6 +52,15 @@ export const ROUTES = {
   EXAMS: "/exams",
   ADD_HYMN: "/add-hymn",
   HYMNS: "/hymns",
+  USERS: "/users",
+  USER_PROFILE: "/users/:id",
+  CLASSES: "/classes",
+  CREATE_CLASS: "/classes/create",
+  CLASS_DETAILS: "/classes/:id",
+  CLASS_ATTENDANCE: "/classes/:id/attendance",
+  ATTENDANCE: "/attendance",
+  EXAM_CORRECTION: "/exams/:subject/correction",
+  NOT_FOUND: "*",
 };
 
 // API Endpoints
@@ -60,18 +69,43 @@ export const API_ENDPOINTS = {
     LOGIN: "/api/auth/login",
     SIGNUP: "/api/auth/signup",
     LOGOUT: "/api/auth/logout",
+    PROFILE: "/api/auth/profile",
   },
   EXAMS: {
     LIST: "/api/exams",
     CREATE: "/api/exams",
     UPDATE: "/api/exams/:id",
     DELETE: "/api/exams/:id",
+    CORRECTION: "/api/exams/:id/correction",
   },
   HYMNS: {
     LIST: "/api/hymns",
     CREATE: "/api/hymns",
     UPDATE: "/api/hymns/:id",
     DELETE: "/api/hymns/:id",
+  },
+  USERS: {
+    LIST: "/api/users",
+    CREATE: "/api/users",
+    UPDATE: "/api/users/:id",
+    DELETE: "/api/users/:id",
+    PROFILE: "/api/users/:id/profile",
+  },
+  CLASSES: {
+    LIST: "/api/classes",
+    CREATE: "/api/classes",
+    UPDATE: "/api/classes/:id",
+    DELETE: "/api/classes/:id",
+    STUDENTS: "/api/classes/:id/students",
+    TEACHERS: "/api/classes/:id/teachers",
+  },
+  ATTENDANCE: {
+    LIST: "/api/attendance",
+    CREATE: "/api/attendance",
+    UPDATE: "/api/attendance/:id",
+    DELETE: "/api/attendance/:id",
+    CLASS: "/api/attendance/class/:classId",
+    USER: "/api/attendance/user/:userId",
   },
 };
 

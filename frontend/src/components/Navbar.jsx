@@ -196,9 +196,9 @@ const Navbar = () => {
     { name: "Home", path: ROUTES.HOME },
     { name: "Exams", path: ROUTES.EXAMS },
     { name: "Hymns", path: ROUTES.HYMNS },
-    { name: "Classes", path: "/classes" },
-    { name: "Users", path: "/users" },
-    { name: "Attendance", path: "/attendance" },
+    { name: "Classes", path: ROUTES.CLASSES },
+    { name: "Users", path: ROUTES.USERS },
+    { name: "Attendance", path: ROUTES.ATTENDANCE },
   ];
 
   return (

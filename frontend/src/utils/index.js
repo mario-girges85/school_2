@@ -1,28 +1,39 @@
-import { VALIDATION, FILE_UPLOAD } from "../constants";
+// Utility Functions
+export * from "./validation";
 
-// Validation Utilities
-export const validateEmail = (email) => {
-  return VALIDATION.EMAIL_REGEX.test(email);
+// Storage Utilities
+export const setLocalStorage = (key, value) => {
+  try {
+    localStorage.setItem(key, JSON.stringify(value));
+  } catch (error) {
+    console.error("Error setting localStorage:", error);
+  }
 };
 
-export const validatePassword = (password) => {
-  return password.length >= VALIDATION.PASSWORD_MIN_LENGTH;
+export const getLocalStorage = (key, defaultValue = null) => {
+  try {
+    const item = localStorage.getItem(key);
+    return item ? JSON.parse(item) : defaultValue;
+  } catch (error) {
+    console.error("Error getting localStorage:", error);
+    return defaultValue;
+  }
 };
 
-export const validatePhone = (phone) => {
-  return VALIDATION.PHONE_REGEX.test(phone);
+export const removeLocalStorage = (key) => {
+  try {
+    localStorage.removeItem(key);
+  } catch (error) {
+    console.error("Error removing localStorage:", error);
+  }
 };
 
-export const validateRequired = (value) => {
-  return value && value.toString().trim().length > 0;
-};
-
-export const validateFileSize = (file) => {
-  return file.size <= FILE_UPLOAD.MAX_SIZE;
-};
-
-export const validateFileType = (file, allowedTypes) => {
-  return allowedTypes.includes(file.type);
+export const clearLocalStorage = () => {
+  try {
+    localStorage.clear();
+  } catch (error) {
+    console.error("Error clearing localStorage:", error);
+  }
 };
 
 // Formatting Utilities
@@ -183,41 +194,6 @@ export const deepClone = (obj) => {
   }
 };
 
-// Storage Utilities
-export const setLocalStorage = (key, value) => {
-  try {
-    localStorage.setItem(key, JSON.stringify(value));
-  } catch (error) {
-    console.error("Error setting localStorage:", error);
-  }
-};
-
-export const getLocalStorage = (key, defaultValue = null) => {
-  try {
-    const item = localStorage.getItem(key);
-    return item ? JSON.parse(item) : defaultValue;
-  } catch (error) {
-    console.error("Error getting localStorage:", error);
-    return defaultValue;
-  }
-};
-
-export const removeLocalStorage = (key) => {
-  try {
-    localStorage.removeItem(key);
-  } catch (error) {
-    console.error("Error removing localStorage:", error);
-  }
-};
-
-export const clearLocalStorage = () => {
-  try {
-    localStorage.clear();
-  } catch (error) {
-    console.error("Error clearing localStorage:", error);
-  }
-};
-
 // URL Utilities
 export const getQueryParams = (url = window.location.href) => {
   const urlObj = new URL(url);
@@ -280,50 +256,6 @@ export const throttle = (func, limit) => {
       setTimeout(() => (inThrottle = false), limit);
     }
   };
-};
-
-// Color Utilities
-export const hexToRgb = (hex) => {
-  const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-  return result
-    ? {
-        r: parseInt(result[1], 16),
-        g: parseInt(result[2], 16),
-        b: parseInt(result[3], 16),
-      }
-    : null;
-};
-
-export const rgbToHex = (r, g, b) => {
-  return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
-};
-
-export const getContrastColor = (hexColor) => {
-  const rgb = hexToRgb(hexColor);
-  if (!rgb) return "#000000";
-
-  const brightness = (rgb.r * 299 + rgb.g * 587 + rgb.b * 114) / 1000;
-  return brightness > 128 ? "#000000" : "#ffffff";
-};
-
-// Audio Utilities
-export const getAudioDuration = (file) => {
-  return new Promise((resolve, reject) => {
-    const audio = new Audio();
-    audio.src = URL.createObjectURL(file);
-
-    audio.addEventListener("loadedmetadata", () => {
-      const durationInSeconds = Math.round(audio.duration);
-      const minutes = Math.floor(durationInSeconds / 60);
-      const seconds = durationInSeconds % 60;
-      const formattedDuration = `${minutes}:${seconds
-        .toString()
-        .padStart(2, "0")}`;
-      resolve(formattedDuration);
-    });
-
-    audio.addEventListener("error", reject);
-  });
 };
 
 // Error Handling

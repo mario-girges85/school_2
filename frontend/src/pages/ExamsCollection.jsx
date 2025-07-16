@@ -169,14 +169,9 @@ const StatCard = ({ icon, title, value, bgColor, iconColor }) => (
 const ExamsStats = ({ exams }) => {
   const totalExams = exams.length;
   const activeExams = exams.filter((exam) => exam.status === "active").length;
-  const totalDuration = exams.reduce((sum, exam) => sum + exam.duration, 0);
-  const totalQuestions = exams.reduce(
-    (sum, exam) => sum + exam.questionCount,
-    0
-  );
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
       <StatCard
         title="Total Exams"
         value={totalExams}
@@ -215,48 +210,6 @@ const ExamsStats = ({ exams }) => {
               strokeLinejoin="round"
               strokeWidth={2}
               d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-            />
-          </svg>
-        }
-      />
-      <StatCard
-        title="Total Duration"
-        value={formatDuration(totalDuration)}
-        bgColor="bg-yellow-100"
-        iconColor="text-yellow-600"
-        icon={
-          <svg
-            className="w-6 h-6 text-yellow-600"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-            />
-          </svg>
-        }
-      />
-      <StatCard
-        title="Total Questions"
-        value={totalQuestions}
-        bgColor="bg-purple-100"
-        iconColor="text-purple-600"
-        icon={
-          <svg
-            className="w-6 h-6 text-purple-600"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
             />
           </svg>
         }

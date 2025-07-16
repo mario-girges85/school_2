@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
+import { NotificationProvider } from "./context/NotificationContext";
 import { ROUTES, APP_NAME } from "./constants";
 import Navbar from "./components/Navbar";
 import Login from "./pages/Login";
@@ -19,6 +20,7 @@ import Profile from "./pages/Profile";
 import Attendance from "./pages/Attendance";
 import ExamCorrection from "./pages/ExamCorrection";
 import NotFound from "./pages/NotFound";
+import ProtectedRoute from "./components/layout/ProtectedRoute";
 
 // Home component
 const Home = () => {
@@ -64,32 +66,129 @@ const Home = () => {
 function App() {
   return (
     <AuthProvider>
-      <Router>
-        <div className="min-h-screen bg-neutral-50">
-          <Navbar />
-          <Routes>
-            <Route path={ROUTES.HOME} element={<Home />} />
-            <Route path={ROUTES.LOGIN} element={<Login />} />
-            <Route path={ROUTES.SIGNUP} element={<Signup />} />
-            <Route path={ROUTES.ADD_EXAM} element={<AddExam />} />
-            <Route path={ROUTES.EXAMS} element={<ExamsCollection />} />
-            <Route path={ROUTES.HYMNS} element={<HymnsCollection />} />
-            <Route path={ROUTES.ADD_HYMN} element={<AddHymn />} />
-            <Route path="/users" element={<Users />} />
-            <Route path="/users/:id" element={<Profile />} />
-            <Route path="/classes" element={<Classes />} />
-            <Route path="/classes/create" element={<CreateClass />} />
-            <Route path="/classes/:id" element={<ClassDetails />} />
-            <Route path="/classes/:id/attendance" element={<Attendance />} />
-            <Route path="/attendance" element={<Attendance />} />
-            <Route
-              path="/exams/:subject/correction"
-              element={<ExamCorrection />}
-            />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </div>
-      </Router>
+      <NotificationProvider>
+        <Router>
+          <div className="min-h-screen bg-neutral-50">
+            <Navbar />
+            <Routes>
+              <Route path={ROUTES.HOME} element={<Home />} />
+              <Route
+                path={ROUTES.LOGIN}
+                element={
+                  // <ProtectedRoute requireAuth={false}>
+                  <Login />
+                  // </ProtectedRoute>
+                }
+              />
+              <Route
+                path={ROUTES.SIGNUP}
+                element={
+                  // <ProtectedRoute requireAuth={false}>
+                  <Signup />
+                  // </ProtectedRoute>
+                }
+              />
+              <Route
+                path={ROUTES.ADD_EXAM}
+                element={
+                  // <ProtectedRoute>
+                  <AddExam />
+                  // </ProtectedRoute>
+                }
+              />
+              <Route
+                path={ROUTES.EXAMS}
+                element={
+                  // <ProtectedRoute>
+                  <ExamsCollection />
+                  // </ProtectedRoute>
+                }
+              />
+              <Route
+                path={ROUTES.HYMNS}
+                element={
+                  // <ProtectedRoute>
+                  <HymnsCollection />
+                  // </ProtectedRoute>
+                }
+              />
+              <Route
+                path={ROUTES.ADD_HYMN}
+                element={
+                  // <ProtectedRoute>
+                  <AddHymn />
+                  // </ProtectedRoute>
+                }
+              />
+              <Route
+                path={ROUTES.USERS}
+                element={
+                  // <ProtectedRoute>
+                  <Users />
+                  // </ProtectedRoute>
+                }
+              />
+              <Route
+                path={ROUTES.USER_PROFILE}
+                element={
+                  // <ProtectedRoute>
+                  <Profile />
+                  // </ProtectedRoute>
+                }
+              />
+              <Route
+                path={ROUTES.CLASSES}
+                element={
+                  // <ProtectedRoute>
+                  <Classes />
+                  // </ProtectedRoute>
+                }
+              />
+              <Route
+                path={ROUTES.CREATE_CLASS}
+                element={
+                  // <ProtectedRoute>
+                  <CreateClass />
+                  // </ProtectedRoute>
+                }
+              />
+              <Route
+                path={ROUTES.CLASS_DETAILS}
+                element={
+                  // <ProtectedRoute>
+                  <ClassDetails />
+                  // </ProtectedRoute>
+                }
+              />
+              <Route
+                path={ROUTES.CLASS_ATTENDANCE}
+                element={
+                  // <ProtectedRoute>
+                  <Attendance />
+                  // </ProtectedRoute>
+                }
+              />
+              <Route
+                path={ROUTES.ATTENDANCE}
+                element={
+                  // <ProtectedRoute>
+                  <Attendance />
+                  // </ProtectedRoute>
+                }
+              />
+              <Route
+                path={ROUTES.EXAM_CORRECTION}
+                element={
+                  // <ProtectedRoute>
+                  <ExamCorrection />
+                  // </ProtectedRoute>
+                }
+              />
+              <Route path={ROUTES.NOT_FOUND} element={<NotFound />} />
+            </Routes>
+          </div>
+        </Router>
+      </NotificationProvider>
     </AuthProvider>
   );
 }
