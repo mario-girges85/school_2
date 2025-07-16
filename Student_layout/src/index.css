@@ -1,0 +1,7 @@
+@import "tailwindcss";
+
+.page-section {
+  padding: 2rem 0;
+  background: #fafbfc;
+  min-height: 100vh;
+}

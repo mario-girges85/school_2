@@ -1,0 +1,43 @@
+const hymns = [
+  {
+    id: 1,
+    title: "Tasbeha Lil Ab",
+    description: "Traditional Coptic hymn praising the Father",
+    category: "Praise",
+    audioUrl: "/audio/tasbeha-lil-ab.mp3",
+    arabicLyrics: "تسبحة للأب القدوس...",
+    copticLyrics: "Ϯⲥⲃⲏϩⲁ ⲛⲉⲙ ⲡⲓⲱⲧ ⲉⲧⲟⲩⲁⲃ...",
+    arabicCopticLyrics: "تسبحة للأب القدوس Ϯⲥⲃⲏϩⲁ ⲛⲉⲙ ⲡⲓⲱⲧ ⲉⲧⲟⲩⲁⲃ...",
+    duration: "3:45",
+    createdAt: "2024-01-15T10:30:00Z",
+    status: "active",
+  },
+  {
+    id: 2,
+    title: "Efnoti Nai Nan",
+    description: "Beautiful Coptic hymn for special occasions",
+    category: "Special Occasions",
+    audioUrl: "/audio/efnoti-nai-nan.mp3",
+    arabicLyrics: "أفنوتي ناي نان...",
+    copticLyrics: "Ⲉⲃⲛⲟⲧⲓ ⲛⲁⲓ ⲛⲁⲛ...",
+    arabicCopticLyrics: "أفنوتي ناي نان Ⲉⲃⲛⲟⲧⲓ ⲛⲁⲓ ⲛⲁⲛ...",
+    duration: "4:20",
+    createdAt: "2024-01-14T14:20:00Z",
+    status: "active",
+  },
+  {
+    id: 3,
+    title: "Adam W Hawwa",
+    description: "Hymn about Adam and Eve",
+    category: "Biblical",
+    audioUrl: "/audio/adam-w-hawwa.mp3",
+    arabicLyrics: "آدم وحواء في الجنة...",
+    copticLyrics: "Ⲁⲇⲁⲙ ⲛⲉⲙ ϩⲁⲩⲁ ⲛⲉⲙ ⲡⲓⲡⲁⲣⲁⲇⲉⲓⲥⲟⲥ...",
+    arabicCopticLyrics: "آدم وحواء في الجنة Ⲁⲇⲁⲙ ⲛⲉⲙ ϩⲁⲩⲁ ⲛⲉⲙ ⲡⲓⲡⲁⲣⲁⲇⲉⲓⲥⲟⲥ...",
+    duration: "5:15",
+    createdAt: "2024-01-13T09:15:00Z",
+    status: "active",
+  },
+];
+
+export default hymns;
